@@ -1,5 +1,5 @@
 // web routing
-require('cloud/app.js');
+require('cloud/web/app.js');
 
 // API routing
-require('cloud/hello.js');
+require('cloud/api/hello.js');
