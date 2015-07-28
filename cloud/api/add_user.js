@@ -1,23 +1,25 @@
 var UserInfo = Parse.Object.extend("UserInfo");
 var UserHouseWork = Parse.Object.extend("UserHouseWork");
 
-Parse.Cloud.define("user_add", function(request, response) {
+Parse.Cloud.define("add_user", function(request, response) {
+    console.log("called add_user");
     createUserId()
-        .then(
-            function(userId) {
-                var user = new UserInfo();
-                user.set("userId", userId);
-                return user.save();
-            }
-        )
-        .then(
-            function(userInfo) {
-                response.success(userInfo);
-            },
-            function() {
-                response.error("error");
-            }
-        )
+    .then(
+        function(userId) {
+            var user = new UserInfo();
+            user.set("userId", userId);
+            user.set("userName", "Anonymous User");
+            return user.save();
+        }
+    )
+    .then(
+        function(userInfo) {
+            response.success(userInfo);
+        },
+        function() {
+            response.error("error");
+        }
+    )
 })
 
 function createUserId(promise) {
