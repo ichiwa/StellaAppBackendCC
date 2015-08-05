@@ -1,12 +1,10 @@
 var UserInfo = Parse.Object.extend("UserInfo");
-
 /**
  * ユーザを追加する
  * @param request
  * @param response
  */
 Parse.Cloud.define("add_user", function(request, response) {
-    //console.log("called add_user");
     createUserId()
     .then(
         function(userId) {
