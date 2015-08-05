@@ -1,8 +1,12 @@
 var UserInfo = Parse.Object.extend("UserInfo");
-var UserHouseWork = Parse.Object.extend("UserHouseWork");
 
+/**
+ * ユーザを追加する
+ * @param request
+ * @param response
+ */
 Parse.Cloud.define("add_user", function(request, response) {
-    console.log("called add_user");
+    //console.log("called add_user");
     createUserId()
     .then(
         function(userId) {
@@ -20,8 +24,13 @@ Parse.Cloud.define("add_user", function(request, response) {
             response.error("error");
         }
     )
-})
+});
 
+/**
+ * 9桁のユーザIDを作成する、失敗した場合は再帰する
+ * Warning:タイムアウトすることがある(Parse.com)
+ * @param promise 
+ */
 function createUserId(promise) {
     var promise = promise || new Parse.Promise();
     // よくあるユーザID 0 ~ 999,999,999 
