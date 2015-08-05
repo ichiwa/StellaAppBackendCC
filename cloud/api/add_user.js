@@ -20,7 +20,8 @@ Parse.Cloud.define("add_user", function(request, response) {
         function(userInfo) {
             response.success(userInfo);
         },
-        function() {
+        function(error) {
+            console.error(error);
             response.error("error");
         }
     )
@@ -50,7 +51,7 @@ function createUserId(promise) {
                 }
             },
             function(error) {
-                promise.error();
+                promise.error(error);
             }
         )
     return promise;
