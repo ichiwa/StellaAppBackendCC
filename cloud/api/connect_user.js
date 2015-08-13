@@ -56,51 +56,5 @@ Parse.Cloud.define("connect_user", function(request, response) {
             })
         }
     )
-    // .sendPushNotification(partnerId, message)
-    // .then(
-    //     function(){
-    //         response.success();
-    //     },
-    //     function(error){
-    //         response.error(error.message);
-    //     }
-    // )
-    // .findUserInfo(userId)
-    // .then(
-    //     function(userInfo){
-    //         response.success(
-    //             {
-    //                 status:0,
-    //                 userInfo:userInfo
-    //             }
-    //         );
-    //     },
-    //     function(error){
-    //         response.error({
-    //             status:1,
-    //             error:error.message
-    //         });
-    //     }
-    // )
-    // Parse.Cloud.run('sendPushNotification', { 
-    //     userId : partnerId, 
-    //     message : message 
-    // }, {
-    //     success: function() {
-    //         response.success(
-    //             {
-    //                 status:0
-    //             }
-    //         );
-    //     },
-    //     error: function(error) {
-    //         response.error(
-    //             {
-    //                 status:1, 
-    //                 error:error
-    //             }
-    //         );
-    //     }
-    // });
 });
 
