@@ -1,4 +1,4 @@
-var functions = require("cloud/api/functions.js");
+var functions = require('cloud/api/functions.js');
 /**
  * ユーザ同士を繋げて
  * 接続先ユーザにプッシュ通知をおくる
@@ -10,7 +10,7 @@ Parse.Cloud.define("connect_user", function(request, response) {
     var partnerId      = parseInt(request.params.partnerId);
     var UserPartnerShip = Parse.Object.extend("UserPartnerShip");
     var myUserInfo;
-    
+
     functions
     .findUserInfo(userId) // ユーザの検索
     .then(
@@ -39,8 +39,9 @@ Parse.Cloud.define("connect_user", function(request, response) {
     .then(
         function(){
             // 相手にプッシュ通知を送る
+            var title   = "";
             var message = myUserInfo.get("userName") + "さんとつながりました。";
-            return functions.sendPushNotification(partnerId, message);
+            return functions.sendPushNotification(partnerId, title, message);
         }
     )
     .then(
@@ -57,4 +58,3 @@ Parse.Cloud.define("connect_user", function(request, response) {
         }
     )
 });
-
