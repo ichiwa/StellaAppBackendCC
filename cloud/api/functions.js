@@ -28,9 +28,11 @@ exports.findUserInfo = function(userId) {
  * 対象のUserIdにプッシュ通知を送る
  * @param userId
  * @param title
+ * @param command
+ * @param params
  * @param message
  */
-exports.sendPushNotification = function(userId, title, message){
+exports.sendPushNotification = function(userId, title, message, command, params){
     var promise = new Parse.Promise();
     var query   = new Parse.Query("UserInfo");
     // user id 
@@ -56,8 +58,11 @@ exports.sendPushNotification = function(userId, title, message){
             return Parse.Push.send({
                 where: pushQuery, 
                 data : {
+                    apiPush : "1",
                     title   : title,
-                    message : message 
+                    message : message,
+                    command : command,
+                    params  : params
                 }
             });
         }

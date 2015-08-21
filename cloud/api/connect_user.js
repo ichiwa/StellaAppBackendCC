@@ -38,10 +38,15 @@ Parse.Cloud.define("connect_user", function(request, response) {
     )
     .then(
         function(){
+            
             // 相手にプッシュ通知を送る
             var title   = "";
             var message = myUserInfo.get("userName") + "さんとつながりました。";
-            return functions.sendPushNotification(partnerId, title, message);
+            var command = "connect_user";
+            var params  = {
+                "partnerId" : myUserInfo.get("userId")
+            };
+            return functions.sendPushNotification(partnerId, title, message, command, params);
         }
     )
     .then(
