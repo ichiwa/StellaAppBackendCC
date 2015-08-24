@@ -1,18 +1,20 @@
 var functions = require('cloud/api/functions.js');
-
 // functions 
 var findUserInfo = functions.findUserInfo;
 var findUserPartnerShip = functions.findUserPartnerShip;
 var sendPushNotification = functions.sendPushNotification;
 /**
- * ユーザ同士の接続を解除する
+ * ユーザ同士を繋げて
+ * 接続先ユーザにプッシュ通知をおくる
  * @param request
  * @param response
  */
-Parse.Cloud.define("disconnect_user", function(request, response) {
+Parse.Cloud.define("connect_partner", function(request, response) {
     var userId         = parseInt(request.params.userId);
     var partnerId      = parseInt(request.params.partnerId);
+    var UserPartnerShip = Parse.Object.extend("UserPartnerShip");
     var myUserInfo;
+
     findUserInfo(userId) // ユーザの検索
     .then(
         function(userInfo){
@@ -23,21 +25,25 @@ Parse.Cloud.define("disconnect_user", function(request, response) {
     )
     .then(
         function(ret){
-            // パートナーシップなし
+            // まだパートナーシップなし
             if (!ret){
-                var errorMessage = "PartnerShip is Not Found. (called " + userId + " - "+ partnerId+ ")";
-                var error        = new Parse.Error(Parse.Error.OBJECT_NOT_FOUND, errorMessage);
-                return Parse.Promise.error(error);
-            // パートナーシップあり
+                var userPartnerShip = new UserPartnerShip();
+                userPartnerShip.set("userId", userId);
+                userPartnerShip.set("partnerId", partnerId);
+                return userPartnerShip.save();
+            // 既にパートナーシップあり
             } else {
-                return ret.destroy();
+                var errorMessage = "PartnerShip is Already exists.(" + userId + " → " + partnerId +")";
+                var error = new Parse.Error(Parse.Error.DUPLICATE_VALUE, errorMessage);
+                return Parse.Promise.error(error);
             }
         }
     )
     .then(
-        function(deleted){
-            var message = "パートナーが解除されました。";
-            var command = "disconnect_user";
+        function(){
+            // 相手にプッシュ通知を送る
+            var message = myUserInfo.get("userName") + "さんとつながりました。";
+            var command = "connect_user";
             var params  = {
                 "partnerId" : myUserInfo.get("userId")
             };
@@ -56,6 +62,5 @@ Parse.Cloud.define("disconnect_user", function(request, response) {
                 error: error.message
             })
         }
-    );
-
+    )
 });
