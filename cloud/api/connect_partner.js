@@ -1,8 +1,8 @@
-var functions = require('cloud/api/functions.js');
+var g = require('cloud/api/globals.js');
 // functions 
-var findUserInfo = functions.findUserInfo;
-var findUserPartnerShip = functions.findUserPartnerShip;
-var sendPushNotification = functions.sendPushNotification;
+var findUserInfo = g.findUserInfo;
+var findUserPartnerShip = g.findUserPartnerShip;
+var sendPushNotification = g.sendPushNotification;
 /**
  * ユーザ同士を繋げて
  * 接続先ユーザにプッシュ通知をおくる
@@ -43,9 +43,10 @@ Parse.Cloud.define("connect_partner", function(request, response) {
         function(){
             // 相手にプッシュ通知を送る
             var message = myUserInfo.get("userName") + "さんとつながりました。";
-            var command = "connect_user";
+            var command = "connect_partner";
             var params  = {
-                "partnerId" : myUserInfo.get("userId")
+                "partnerId" : myUserInfo.get("userId"),
+                "partnerName" : myUserInfo.get("userName")
             };
             return sendPushNotification(partnerId, message, command, params);
         }

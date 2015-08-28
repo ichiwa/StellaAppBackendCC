@@ -1,6 +1,16 @@
-// Use Parse.Cloud.define to define as many cloud functions as you want.
-// For example:
+var ApiBase = require('cloud/api/api_base.js');
+var g = require('cloud/api/globals.js');
+
 Parse.Cloud.define("hello", function(request, response) {
-    response.success({msg:"success"});
+    var api = new ApiBase({
+        request : request,
+        response : response,
+        run : function(){
+            return Parse.Promise.as();
+        }
+    });
+    console.log("calling run !!!!!");
+    api.run();
 });
+
 

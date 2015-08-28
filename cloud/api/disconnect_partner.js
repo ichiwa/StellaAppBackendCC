@@ -1,9 +1,8 @@
-var functions = require('cloud/api/functions.js');
-
+var g = require('cloud/api/globals.js');
 // functions 
-var findUserInfo = functions.findUserInfo;
-var findUserPartnerShip = functions.findUserPartnerShip;
-var sendPushNotification = functions.sendPushNotification;
+var findUserInfo = g.findUserInfo;
+var findUserPartnerShip = g.findUserPartnerShip;
+var sendPushNotification = g.sendPushNotification;
 /**
  * ユーザ同士の接続を解除する
  * @param request
@@ -37,7 +36,7 @@ Parse.Cloud.define("disconnect_partner", function(request, response) {
     .then(
         function(deleted){
             var message = "パートナーが解除されました。";
-            var command = "disconnect_user";
+            var command = "disconnect_partner";
             var params  = {
                 "partnerId" : myUserInfo.get("userId")
             };
