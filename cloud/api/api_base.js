@@ -40,9 +40,9 @@ ApiBase.prototype.finish = function(){
  * 異常レスポンス
  */
 ApiBase.prototype.error = function(error){
-    this.result.error = error;
     this.response.error({
-        status : this.status
+        apiStatus : this.apiStatus,
+        error : error
     });
 }
 

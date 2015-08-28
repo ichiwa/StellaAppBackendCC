@@ -36,7 +36,6 @@ Parse.Cloud.define("add_user", function(request, response) {
                 }
             )
             return promise;
-            
         }
     });
     api.run();

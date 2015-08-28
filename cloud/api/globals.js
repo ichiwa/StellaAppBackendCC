@@ -26,14 +26,16 @@ exports.findUserInfo = function(userId) {
 
 /**
  * 対象のUserIdにプッシュ通知を送る
- * @param userId
- * @param message
- * @param command
- * @param params
+ * @param data
  */
-exports.sendPushNotification = function(userId, message, command, params){
+exports.sendPushNotification = function(data){
     var promise = new Parse.Promise();
     var query   = new Parse.Query("UserInfo");
+    var userId  = data.userId;
+    var message = data.message;
+    var command = data.command;
+    var params  = data.params;
+    var pushType = data.pushType;
     // user id 
     query.equalTo('userId', parseInt(userId));
     query
@@ -57,10 +59,10 @@ exports.sendPushNotification = function(userId, message, command, params){
             return Parse.Push.send({
                 where: pushQuery, 
                 data : {
-                    apiPush : true,
-                    alert   : message, 
-                    command : command,
-                    params  : params
+                    pushType     : pushType,
+                    alert        : message, 
+                    command      : command,
+                    params       : params
                 }
             });
         }
@@ -132,4 +134,13 @@ exports.createUserId = function(promise) {
         }
     )
     return promise;
+}
+/**
+ * PUSH のタイプ
+ */
+exports.PUSH = {
+    NORMAL : 0,
+    DIALOG : 1,
+    DIALOG_AND_UPDATE : 2,
+    UPDATE : 3
 }
