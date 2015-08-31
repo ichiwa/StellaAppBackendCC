@@ -23,10 +23,33 @@ exports.findUserInfo = function(userId) {
     )
     return promise;
 }
+/**
+ * 対象の日付のuserhouseworkを取得する
+ * @param userId
+ * @param targetDate
+ */
+exports.findUserHousework = function(userId, targetDate){
+    var promise = new Parse.Promise();
+    var query = new Parse.Query("UserHousework");
+    query.equalTo('userId', parseInt(userId));
+    query.equalTo('targetDate', new Date(targetDate));
+    query.first()
+    .then(
+        function(userHousework){
+            console.log(userHousework);
+            promise.resolve(userHousework);
+        },
+        function(error){
+            promise.reject(error);
+        }
+    )
+    return promise;
+}
+
 
 /**
  * 対象のUserIdにプッシュ通知を送る
- * @param data
+ * @param {object} it contains userId, message, command, params and pushType.
  */
 exports.sendPushNotification = function(data){
     var promise = new Parse.Promise();
@@ -86,11 +109,14 @@ exports.sendPushNotification = function(data){
 exports.findUserPartnerShip = function(userId, partnerId){
     var promise = new Parse.Promise();
     var query1   = new Parse.Query("UserPartnerShip");
-    query1.equalTo("userId", userId);
-    query1.equalTo("partnerId", partnerId);
     var query2   = new Parse.Query("UserPartnerShip");
-    query2.equalTo("userId", partnerId);
+    query1.equalTo("userId", userId);
     query2.equalTo("partnerId", userId);
+    // パートナーidあれば
+    if (partnerId){
+        query1.equalTo("partnerId", partnerId);
+        query2.equalTo("userId", partnerId);
+    }
     // OR
     var multipleQuery = Parse.Query.or(query1, query2);
     multipleQuery

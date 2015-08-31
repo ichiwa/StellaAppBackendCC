@@ -6,26 +6,30 @@ var ApiBase = function(params){
     this.response = params.response;
     this.result  = {};
     this.apiStatus  = 0;
-    this._run = params.run || 
-        function(){ console.log("there's no Run function."); return Parse.Promise.as(); }
+    // It's to return the Promise Object
+    this.main = params.main || 
+        function(){ console.log("there's no Main function."); return Parse.Promise.as(); }
 }
 
 /**
  * 本処理
  */
-ApiBase.prototype.run = function(){
+ApiBase.prototype.execute = function(){
     var promise = new Parse.Promise();
     var self = this;
     this
-    ._run()
+    .main.apply(this)
     .then(
         function(){
             self.finish();
+            promise.resolve();
         },
         function(e){
             self.error(e);
+            promise.reject(e);
         }
     );
+    return promise;
 }
 
 /**
