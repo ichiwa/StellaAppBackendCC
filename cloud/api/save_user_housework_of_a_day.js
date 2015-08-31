@@ -44,39 +44,6 @@ var main = function(){
             promise.reject(error);
         }
     )
-    // .then(
-    //     function(userPartnerShip){
-    //         // あれば
-    //         if (userPartnerShip){
-    //             targetUserId = 0;
-    //             // to partnerId
-    //             if (userPartnerShip.get("userId") == userId){
-    //                 targetUserId = userPartnerShip.get("partnerId");
-    //             // to userId
-    //             } else {
-    //                 targetUserId = userPartnerShip.get("userId");
-    //             }
-    //             var data = {
-    //                 "userId" : targetUserId,
-    //                 "message" : "",
-    //                 "command" : ""
-    //             }
-    //             return sendPushNotification(data);
-    //         // なければ次へ
-    //         } else {
-    //             return Parse.Promise.as();
-    //         }
-    //     }
-    // )
-    // .then(
-    //     function(){
-    //         promise.resolve();
-    //     },
-    //     function(error){
-    //         self.apiStatus = -1;
-    //         promise.reject(error);
-    //     }
-    // )
     return promise;
 }
 Parse.Cloud.define("save_user_housework_of_a_day", function(request, response) {

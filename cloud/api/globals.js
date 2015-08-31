@@ -162,6 +162,30 @@ exports.createUserId = function(promise) {
     return promise;
 }
 /**
+ * 範囲内のuserhouworkを取得して返す
+ * @param : userId
+ * @param : from
+ * @param : to
+ */
+exports.findUserHouseworkOfRange = function(userId, from, to){
+    var promise = new Parse.Promise();
+    var query   = new Parse.Query("UserHousework");
+    query.equalTo("userId", userId);
+    query.greaterThanOrEqualTo("targetDate", from);
+    query.lessThanOrEqualTo("targetDate", to);
+    query.find()
+    .then(
+        function(userHouseworkArray){
+            promise.resolve(userHouseworkArray);
+        },
+        function(error){
+            promise.reject(error); 
+        }
+    )
+    return promise;
+}
+
+/**
  * PUSH のタイプ
  */
 exports.PUSH = {
