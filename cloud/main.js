@@ -1,7 +1,10 @@
 "use strict";
 
-// web routing
+// Web routing
 require('cloud/web/app.js');
+
+// Web Hooks
+require('cloud/hooks/after_saved_user_housework.js');
 
 // API routing
 require('cloud/api/hello.js');

@@ -4,7 +4,6 @@ var PUSH                    = g.PUSH;
 var findUserInfo            = g.findUserInfo;
 var findUserPartnerShip     = g.findUserPartnerShip;
 var findUserHousework       = g.findUserHousework;
-var sendPushNotification    = g.sendPushNotification;
 var ApiBase = require('cloud/api/api_base.js');
 /**
  * ユーザの家事情報を保存する
