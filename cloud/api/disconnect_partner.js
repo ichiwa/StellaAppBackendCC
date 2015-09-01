@@ -13,6 +13,7 @@ var main = function(){
     var promise        = new Parse.Promise();
     var userId         = parseInt(self.request.params.userId);
     var partnerId      = parseInt(self.request.params.partnerId);
+    var UserPartnerShipHistory = Parse.Object.extend("UserPartnerShipHistory");
     var myUserInfo;
     findUserInfo(userId) // ユーザの検索
     .then(
@@ -37,6 +38,14 @@ var main = function(){
     )
     .then(
         function(deleted){
+            var history = new UserPartnerShipHistory();
+            history.set('userId', deleted.get('userId'));
+            history.set('partnerId', deleted.get('partnerId'));
+            return history.save();
+        }
+    )
+    .then(
+        function(history){
             var message = "パートナーが解除されました。";
             var command = "disconnect_partner";
             var params  = {
