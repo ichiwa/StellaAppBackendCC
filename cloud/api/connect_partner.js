@@ -16,10 +16,18 @@ var main = function(){
     var partnerId      = parseInt(self.request.params.partnerId);
     var UserPartnerShip = Parse.Object.extend("UserPartnerShip");
     var myUserInfo;
+    var partnerUserInfo;
     findUserInfo(userId) // ユーザの検索
     .then(
         function(userInfo){
             myUserInfo = userInfo;
+            // パートナーの存在確認  
+            return findUserInfo(partnerId);
+        }
+    )
+    .then(
+        function(userInfo){
+            partnerUserInfo = userInfo;
             // パートナーシップの検索
             return findUserPartnerShip(userId, partnerId);
         }
@@ -61,6 +69,7 @@ var main = function(){
     )
     .then(
         function(){
+            self.result.partnerUserInfo = partnerUserInfo;
             promise.resolve();
         },
         function(error){
