@@ -14,9 +14,16 @@ var main = function(){
     var partnerId  = parseInt(self.request.params.partnerId);
     var from    = new Date(self.request.params.from); // yyyy-mm-dd 00:00:00
     var to      = new Date(self.request.params.to);   // yyyy-mm-dd 00:00:00
+    var partnerUserInfo;
     findUserInfo(userId)
     .then(
         function(userInfo){
+            return findUserInfo(partnerId);
+        }
+    )
+    .then(
+        function(userInfo){
+            partnerUserInfo = userInfo;
             return findUserPartnerShip(userId, partnerId);
         }
     )
@@ -32,6 +39,7 @@ var main = function(){
     )
     .then(
         function(userHouseworkArray){
+            self.result.partnerUserInfo    = partnerUserInfo;
             self.result.userHouseworkArray = userHouseworkArray;
             promise.resolve();
         },

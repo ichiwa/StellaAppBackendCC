@@ -13,3 +13,4 @@ require('cloud/api/connect_partner.js');
 require('cloud/api/disconnect_partner.js');
 require('cloud/api/save_user_housework_of_a_day.js');
 require('cloud/api/sync_partner_housework.js');
+require('cloud/api/update_user_info.js');

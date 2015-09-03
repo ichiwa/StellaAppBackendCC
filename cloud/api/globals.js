@@ -139,7 +139,7 @@ exports.findUserPartnerShip = function(userId, partnerId){
  */
 exports.createUserId = function(promise) {
     var promise = promise || new Parse.Promise();
-    // よくあるユーザID 0 ~ 999,999,999 
+    // よくあるユーザID 0 ~ 999,999,999,999
     var userId = Math.floor(Math.random() * 999999999);
     var query = new Parse.Query("UserInfo");
     query.equalTo("userId", userId);

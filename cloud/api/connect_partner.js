@@ -39,6 +39,7 @@ var main = function(){
                 var userPartnerShip = new UserPartnerShip();
                 userPartnerShip.set("userId", userId);
                 userPartnerShip.set("partnerId", partnerId);
+                //return Parse.Promise.as();
                 return userPartnerShip.save();
             // 既にパートナーシップあり
             } else {
