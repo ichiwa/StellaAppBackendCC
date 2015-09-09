@@ -36,7 +36,6 @@ exports.findUserHousework = function(userId, targetDate){
     query.first()
     .then(
         function(userHousework){
-            console.log(userHousework);
             promise.resolve(userHousework);
         },
         function(error){
@@ -46,6 +45,27 @@ exports.findUserHousework = function(userId, targetDate){
     return promise;
 }
 
+/**
+ * 対象のUserWishItemを取得する
+ * @param userId
+ * @param itemCode
+ */
+exports.findUseWishItem = function(userId, itemCode){
+    var promise = new Parse.Promise();
+    var query = new Parse.Query("UserWishItem");
+    query.equalTo('userId', parseInt(userId));
+    query.equalTo('itemCode', itemCode);
+    query.first()
+    .then(
+        function(userWishItem){
+            promise.resolve(userWishItem);
+        },
+        function(error){
+            promise.reject(error);
+        }
+    )
+    return promise;
+}
 
 /**
  * 対象のUserIdにプッシュ通知を送る
@@ -103,6 +123,8 @@ exports.sendPushNotification = function(data){
 
 /**
  * 既に関係が存在するか
+ * 今のところ一つのみ対応
+ * ※どうしたものか・・・(´ω`)
  * @param userId
  * @param partnerId
  */
@@ -193,4 +215,12 @@ exports.PUSH = {
     DIALOG : 1,
     DIALOG_AND_UPDATE : 2,
     UPDATE : 3
+}
+
+/**
+ * UserWishItemsのItemStatus
+ */
+exports.ITEM_STATUS = {
+    DISABLE : 0,
+    ENABLE  : 1
 }

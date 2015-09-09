@@ -1,16 +1,16 @@
 var g = require('cloud/api/globals.js');
-//var moment = require('cloud/libs/moment.js');
 var PUSH                    = g.PUSH;
 var findUserPartnerShip     = g.findUserPartnerShip;
 var sendPushNotification    = g.sendPushNotification;
+
 /**
- * UserHousework が保存されたあとに呼ばれる
+ * UserWishItem が保存されたあとに呼ばれる
  * @param request
  */
-Parse.Cloud.afterSave("UserHousework", function(request) {
+Parse.Cloud.afterSave("UserWishItem", function(request) {
     // 保存されたObjectを取得
-    var userHousework = request.object;
-    var userId        = userHousework.get("userId");
+    var userWishItem = request.object;
+    var userId       = userWishItem.get("userId");
     findUserPartnerShip(userId)
     .then(
         function(userPartnerShip){
@@ -22,28 +22,32 @@ Parse.Cloud.afterSave("UserHousework", function(request) {
                 } else {
                     targetUserId = userPartnerShip.get("userId");
                 }
-                //console.log("ps:"+JSON.stringify(userPartnerShip));
+                // push 
                 var data = {
                     "userId"  : targetUserId,
-                    "message" : "after save userHousework event",
-                    "command" : "update_partner_housework",
+                    "message" : "after save userWishItem event",
+                    "command" : "update_user_wish_item",
                     "pushType": PUSH.UPDATE,
                     "params"  : {
-                        "partnerId" : userId,
-                        "houseworks": userHousework.get("houseworks"),
-                        "targetDate": userHousework.get("targetDate")
+                        "partnerId"     : userId,
+                        "itemCode"      : userWishItem.get('itemCode'),
+                        "itemTitle"     : userWishItem.get('itemTitle'),
+                        "itemUrl"       : userWishItem.get('itemUrl'),
+                        "itemPrice"     : userWishItem.get('itemPrice'),
+                        "itemImageUrl"  : userWishItem.get('itemImageUrl'),
+                        "itemStatus"    : userWishItem.get('itemStatus')
                     }
                 }
-                //console.log("data:"+JSON.stringify(data));
                 return sendPushNotification(data);
             } else {
+                // 何もしない
                 return Parse.Promise.as();
             }
         }
     )
     .then(
         function(){
-            console.log("completed function after save userHousework. ");
+            console.log("completed after userWishItem saving ");
         },
         function(error){
             console.error(error);
