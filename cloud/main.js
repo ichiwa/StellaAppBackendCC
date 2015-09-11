@@ -18,3 +18,4 @@ require('cloud/api/update_user_info.js');
 require('cloud/api/update_user_wish_item.js');
 require('cloud/api/delete_user_wish_item.js');
 require('cloud/api/add_user_wish_item.js');
+require('cloud/api/sync_partner_wish_item.js');

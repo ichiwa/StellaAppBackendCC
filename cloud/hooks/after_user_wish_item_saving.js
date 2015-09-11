@@ -16,15 +16,9 @@ Parse.Cloud.afterSave("UserWishItem", function(request) {
         function(userPartnerShip){
             // パートナーにデータ更新通知をする
             if (userPartnerShip){
-                var targetUserId = 0;
-                if (userPartnerShip.get("userId") == userId){
-                    targetUserId = userPartnerShip.get("partnerId");
-                } else {
-                    targetUserId = userPartnerShip.get("userId");
-                }
                 // push 
                 var data = {
-                    "userId"  : targetUserId,
+                    "userId"  : userWishItem.get('userId'),
                     "message" : "after save userWishItem event",
                     "command" : "update_user_wish_item",
                     "pushType": PUSH.UPDATE,

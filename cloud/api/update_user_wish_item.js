@@ -15,8 +15,8 @@ var main = function(){
     var itemUrl      = self.request.params.itemUrl;
     var itemImageUrl = self.request.params.itemImageUrl;
     var itemCode     = self.request.params.itemCode;
-    var itemPrice    = self.request.params.itemPrice;
-    var itemStatus   = self.request.params.itemStatus;
+    var itemPrice    = parseInt(self.request.params.itemPrice);
+    var itemStatus   = parseInt(self.request.params.itemStatus);
     var UserWishItem = Parse.Object.extend("UserWishItem");
     var myUserInfo;
     findUserInfo(userId) // ユーザの検索

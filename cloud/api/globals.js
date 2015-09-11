@@ -208,6 +208,26 @@ exports.findUserHouseworkOfRange = function(userId, from, to){
 }
 
 /**
+ * ユーザのほしいものリストを返す
+ * @param : userId
+ */
+exports.findUserWishItem = function(userId){
+    var promise = new Parse.Promise();
+    var query   = new Parse.Query("UserWishItem");
+    query.equalTo("userId", userId);
+    query.find()
+    .then(
+        function(userWishItemArray){
+            promise.resolve(userWishItemArray);
+        },
+        function(error){
+            promise.reject(error);
+        }
+    );
+    return promise;
+}
+
+/**
  * PUSH のタイプ
  */
 exports.PUSH = {
