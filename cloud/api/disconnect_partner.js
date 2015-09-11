@@ -46,7 +46,7 @@ var main = function(){
     )
     .then(
         function(history){
-            var message = "パートナーが解除されました。";
+            var message = "パートナーが解除されました";
             var command = "disconnect_partner";
             var params  = {
                 "partnerId" : myUserInfo.get("userId")

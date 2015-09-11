@@ -52,7 +52,7 @@ var main = function(){
     .then(
         function(){
             // 相手にプッシュ通知を送る
-            var message = myUserInfo.get("userName") + "さんとつながりました。";
+            var message = myUserInfo.get("userName") + "さんとつながりました";
             var command = "connect_partner";
             var params  = {
                 "partnerId" : myUserInfo.get("userId"),
