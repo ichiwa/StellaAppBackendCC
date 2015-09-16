@@ -2,8 +2,7 @@ var ApiBase = require('cloud/api/api_base.js');
 var g = require('cloud/api/globals.js');
 var findUserInfo            = g.findUserInfo;
 var findUserPartnerShip     = g.findUserPartnerShip;
-var findUserHousework       = g.findUserHousework;
-var findUserHouseworkOfRange= g.findUserHouseworkOfRange;
+var findUserScheduledTaskOfRange= g.findUserScheduledTaskOfRange;
 /**
  * パートナー情報を一週間分返す
  */
@@ -30,7 +29,7 @@ var main = function(){
     .then(
         function(userPartnerShip){
             if (userPartnerShip){
-                return findUserHouseworkOfRange(partnerId, from, to);
+                return findUserScheduledTaskOfRange(partnerId, from, to);
             } else {
                 var error = new Parse.Error(Parse.Error.OBJECT_NOT_FOUND, "PartnerShip not found.");
                 return Parse.Promise.error(error);
@@ -38,9 +37,9 @@ var main = function(){
         }
     )
     .then(
-        function(userHouseworkArray){
-            self.result.partnerUserInfo    = partnerUserInfo;
-            self.result.userHouseworkArray = userHouseworkArray;
+        function(userScheduledTaskArray){
+            self.result.partnerUserInfo = partnerUserInfo;
+            self.result.userScheduledTaskArray = userScheduledTaskArray;
             promise.resolve();
         },
         function(error){
@@ -48,10 +47,9 @@ var main = function(){
             promise.reject(error);
         }
     )
-    
     return promise;
 }
-Parse.Cloud.define("sync_partner_housework", function(request, response) {
+Parse.Cloud.define("sync_scheduled_task", function(request, response) {
     var api = new ApiBase({
         request : request,
         response : response,

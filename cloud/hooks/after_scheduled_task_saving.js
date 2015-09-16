@@ -4,13 +4,13 @@ var PUSH                    = g.PUSH;
 var findUserPartnerShip     = g.findUserPartnerShip;
 var sendPushNotification    = g.sendPushNotification;
 /**
- * UserHousework が保存されたあとに呼ばれる
+ * ScheduledTask が保存されたあとに呼ばれる
  * @param request
  */
-Parse.Cloud.afterSave("UserHousework", function(request) {
+Parse.Cloud.afterSave("ScheduledTask", function(request) {
     // 保存されたObjectを取得
-    var userHousework = request.object;
-    var userId        = userHousework.get("userId");
+    var scheduledTask = request.object;
+    var userId        = scheduledTask.get("userId");
     findUserPartnerShip(userId)
     .then(
         function(userPartnerShip){
@@ -25,13 +25,13 @@ Parse.Cloud.afterSave("UserHousework", function(request) {
                 //console.log("ps:"+JSON.stringify(userPartnerShip));
                 var data = {
                     "userId"  : targetUserId,
-                    "message" : "after save userHousework event",
-                    "command" : "update_partner_housework",
+                    "message" : "after save ScheduledTask event",
+                    "command" : "update_partner_task",
                     "pushType": PUSH.UPDATE,
                     "params"  : {
                         "partnerId" : userId,
-                        "houseworks": userHousework.get("houseworks"),
-                        "targetDate": userHousework.get("targetDate")
+                        "tasks": scheduledTask.get("tasks"),
+                        "targetDate": scheduledTask.get("targetDate")
                     }
                 }
                 //console.log("data:"+JSON.stringify(data));
@@ -43,7 +43,7 @@ Parse.Cloud.afterSave("UserHousework", function(request) {
     )
     .then(
         function(){
-            console.log("completed after userHousework saving. ");
+            console.log("completed after scheduledTask saving. ");
         },
         function(error){
             console.error(error);

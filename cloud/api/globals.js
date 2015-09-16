@@ -24,19 +24,19 @@ exports.findUserInfo = function(userId) {
     return promise;
 }
 /**
- * 対象の日付のuserhouseworkを取得する
+ * 対象の日付のtaskを取得する
  * @param userId
  * @param targetDate
  */
-exports.findUserHousework = function(userId, targetDate){
+exports.findUserScheduledTask = function(userId, targetDate){
     var promise = new Parse.Promise();
-    var query = new Parse.Query("UserHousework");
+    var query = new Parse.Query("ScheduledTask");
     query.equalTo('userId', parseInt(userId));
     query.equalTo('targetDate', new Date(targetDate));
     query.first()
     .then(
-        function(userHousework){
-            promise.resolve(userHousework);
+        function(scheduledTask){
+            promise.resolve(scheduledTask);
         },
         function(error){
             promise.reject(error);
@@ -184,21 +184,21 @@ exports.createUserId = function(promise) {
     return promise;
 }
 /**
- * 範囲内のuserhouworkを取得して返す
+ * 範囲内のtaskを取得して返す
  * @param : userId
  * @param : from
  * @param : to
  */
-exports.findUserHouseworkOfRange = function(userId, from, to){
+exports.findUserScheduledTaskOfRange = function(userId, from, to){
     var promise = new Parse.Promise();
-    var query   = new Parse.Query("UserHousework");
+    var query   = new Parse.Query("ScheduledTask");
     query.equalTo("userId", userId);
     query.greaterThanOrEqualTo("targetDate", from);
     query.lessThanOrEqualTo("targetDate", to);
     query.find()
     .then(
-        function(userHouseworkArray){
-            promise.resolve(userHouseworkArray);
+        function(scheduledTasks){
+            promise.resolve(scheduledTasks);
         },
         function(error){
             promise.reject(error); 

@@ -3,7 +3,7 @@ var g = require('cloud/api/globals.js');
 var PUSH                    = g.PUSH;
 var findUserInfo            = g.findUserInfo;
 var findUserPartnerShip     = g.findUserPartnerShip;
-var findUserHousework       = g.findUserHousework;
+var findUserScheduledTask   = g.findUserScheduledTask;
 var ApiBase = require('cloud/api/api_base.js');
 /**
  * ユーザの家事情報を保存する
@@ -14,29 +14,29 @@ var main = function(){
     var promise = new Parse.Promise();
     var userId         = parseInt(self.request.params.userId);
     var targetDate     = self.request.params.targetDate;
-    var houseworks     = self.request.params.houseworks;
+    var tasks     = self.request.params.tasks;
     findUserInfo(userId)
     .then(
         function(userInfo){
-            return findUserHousework(userId, targetDate);
+            return findUserScheduledTask(userId, targetDate);
         }
     )
     .then(
-        function(userHousework){
+        function(scheduledTask){
             // insert
-            if (!userHousework){
-                var UserHousework = Parse.Object.extend("UserHousework");
-                userHousework = new UserHousework();
-                userHousework.set("userId", userId);
-                userHousework.set("targetDate", new Date(targetDate));
+            if (!scheduledTask){
+                var ScheduledTask = Parse.Object.extend("ScheduledTask");
+                scheduledTask = new ScheduledTask();
+                scheduledTask.set("userId", userId);
+                scheduledTask.set("targetDate", new Date(targetDate));
             }
-            userHousework.set("houseworks", houseworks);
-            return userHousework.save();
+            scheduledTask.set("tasks", tasks);
+            return scheduledTask.save();
         }
     )
     .then(
-        function(userHousework){
-            self.result.userInfo = userHousework;
+        function(scheduledTask){
+            self.result.userScheduledTask = scheduledTask;
             promise.resolve();
         },
         function(error){
@@ -46,7 +46,7 @@ var main = function(){
     )
     return promise;
 }
-Parse.Cloud.define("save_user_housework_of_a_day", function(request, response) {
+Parse.Cloud.define("save_scheduled_task_of_a_day", function(request, response) {
     var api = new ApiBase({
         request : request, 
         response : response,
