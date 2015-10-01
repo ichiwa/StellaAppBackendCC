@@ -23,6 +23,30 @@ exports.findUserInfo = function(userId) {
     )
     return promise;
 }
+
+/**
+ * ユーザーIDとタスクIDでマスタタスクを取得する
+ * @param userId
+ * @param taskId
+ */
+exports.findTask = function(userId, taskId){
+    var promise = new Parse.Promise();
+    var query = new Parse.Query("Task");
+    query.equalTo('userId', parseInt(userId));
+    query.equalTo('task_id', parseInt(taskId));
+    query.first()
+    .then(
+        function(task){
+            promise.resolve(task);
+        },
+        function(error){
+            promise.reject(error);
+        }
+    )
+    return promise;
+
+}
+
 /**
  * 対象の日付のtaskを取得する
  * @param userId

@@ -28,8 +28,8 @@ var main = function(){
     .then(
         function(userInfo){
             partnerUserInfo = userInfo;
-            // パートナーシップの検索
-            return findUserPartnerShip(userId, partnerId);
+            // 相手のパートナーシップを検索
+            return findUserPartnerShip(partnerId);
         }
     )
     .then(
