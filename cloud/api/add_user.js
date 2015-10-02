@@ -8,12 +8,13 @@ var main = function(){
     var promise = new Parse.Promise();
     var UserInfo = Parse.Object.extend("UserInfo");
     var self = this;
+    var userName = self.request.params.userName;
     createUserId()
     .then(
         function(userId) {
             var user = new UserInfo();
             user.set("userId", userId);
-            user.set("userName", "Anonymous User");
+            user.set("userName", userName);
             user.set('password', '');
             user.set('installationId', self.request.params.installationId);
             return user.save();
