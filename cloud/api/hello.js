@@ -1,5 +1,5 @@
-var ApiBase = require('cloud/api/api_base.js');
-var g = require('cloud/api/globals.js');
+var ApiBase = require('./api_base.js');
+var g = require('./globals.js');
 var findUserInfo            = g.findUserInfo;
 var findUserPartnerShip     = g.findUserPartnerShip;
 

@@ -1,4 +1,4 @@
-var g = require('cloud/api/globals.js');
+var g = require('./../api/globals.js');
 var PUSH                    = g.PUSH;
 var findUserPartnerShip     = g.findUserPartnerShip;
 var sendPushNotification    = g.sendPushNotification;

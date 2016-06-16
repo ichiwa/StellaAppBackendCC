@@ -1,6 +1,6 @@
-var g = require('cloud/api/globals.js');
+var g = require('./globals.js');
 var createUserId = g.createUserId;
-var ApiBase = require('cloud/api/api_base.js');
+var ApiBase = require('./api_base.js');
 /**
  * ユーザを追加する
  */

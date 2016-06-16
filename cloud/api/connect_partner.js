@@ -1,9 +1,9 @@
-var g = require('cloud/api/globals.js');
+var g = require('./globals.js');
 // functions 
 var findUserInfo = g.findUserInfo;
 var findUserPartnerShip = g.findUserPartnerShip;
 var sendPushNotification = g.sendPushNotification;
-var ApiBase = require('cloud/api/api_base.js');
+var ApiBase = require('./api_base.js');
 
 /**
  * ユーザ同士を繋げて

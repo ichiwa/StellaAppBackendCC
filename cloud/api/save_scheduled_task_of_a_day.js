@@ -1,10 +1,10 @@
-var g = require('cloud/api/globals.js');
+var g = require('./globals.js');
 // functions 
 var PUSH                    = g.PUSH;
 var findUserInfo            = g.findUserInfo;
 var findUserPartnerShip     = g.findUserPartnerShip;
 var findUserScheduledTask   = g.findUserScheduledTask;
-var ApiBase = require('cloud/api/api_base.js');
+var ApiBase = require('./api_base.js');
 /**
  * ユーザの家事情報を保存する
  * 1日分
